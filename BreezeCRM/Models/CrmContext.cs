@@ -6,7 +6,8 @@ namespace BreezeCRM.Models
     {
         public CrmContext() : base("CrmContext")
         {
-            
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public DbSet<Customer> Customers { get; set; }

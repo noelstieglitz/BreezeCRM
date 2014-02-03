@@ -4,10 +4,9 @@
 angular.module('myApp.services', [])
   .factory('custDataService', function(breeze) {
 
-    //breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
-    breeze.config.initializeAdapterInstances({ dataService: "webApi" });
-    var serviceName = 'odata/';
+    breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
 
+    var serviceName = 'breeze/Customer';
     var manager = new breeze.EntityManager(serviceName);
     //manager.enableSaveQueuing(true);
 
@@ -17,8 +16,7 @@ angular.module('myApp.services', [])
 
     function getAllCustomers() {
         var query = breeze.EntityQuery
-                .from("Customers")
-                .orderBy("LastName");
+                .from("Customers");
 
         return manager.executeQuery(query);
     }

@@ -11,12 +11,7 @@ namespace BreezeCRM
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-            var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Customer>("Customer");
-            builder.EntitySet<Order>("Order");
-            config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
-
+    
             // Web API routes
             config.MapHttpAttributeRoutes();
 

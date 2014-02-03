@@ -1,10 +1,14 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.OData;
+using System.Web.Http.Description;
 using Breeze.ContextProvider.EF6;
 using Breeze.WebApi2;
 using BreezeCRM.Models;
@@ -12,52 +16,57 @@ using BreezeCRM.Models;
 namespace BreezeCRM.Controllers
 {
     [BreezeController]
-    public class CustomerController : ODataController
+    public class CustomerController : ApiController
     {
-        private readonly CrmContext db = new CrmContext();
         readonly EFContextProvider<CrmContext> _contextProvider = new EFContextProvider<CrmContext>();
-
-        // GET odata/Customer
-        [Queryable]
-        public IQueryable<Customer> GetCustomer()
-        {
-            return db.Customers;
-        }
-
-        // GET odata/Customer(5)
-        [Queryable]
-        public SingleResult<Customer> GetCustomer([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.Customers.Where(customer => customer.Id == key));
-        }
 
         [HttpGet]
         public string Metadata()
         {
             return _contextProvider.Metadata();
         }
-        // PUT odata/Customer(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Customer customer)
+
+        [HttpGet]
+        public IQueryable<Customer> Customers()
+        {
+            return _contextProvider.Context.Customers.Include(x=> x.Orders);
+        }
+
+        [ResponseType(typeof(Customer))]
+        [HttpGet]
+        public async Task<IHttpActionResult> Customers(int id)
+        {
+            Customer customer = await _contextProvider.Context.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(customer);
+        }
+
+        [HttpPut]
+        public async Task<IHttpActionResult> PutCustomer(int id, Customer customer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != customer.Id)
+            if (id != customer.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(customer).State = EntityState.Modified;
+            _contextProvider.Context.Entry(customer).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _contextProvider.Context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(key))
+                if (!CustomerExists(id))
                 {
                     return NotFound();
                 }
@@ -66,94 +75,53 @@ namespace BreezeCRM.Controllers
                     throw;
                 }
             }
-
-            return Updated(customer);
-        }
-
-        // POST odata/Customer
-        public async Task<IHttpActionResult> Post(Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Customers.Add(customer);
-            await db.SaveChangesAsync();
-
-            return Created(customer);
-        }
-
-        // PATCH odata/Customer(5)
-        [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Customer> patch)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            Customer customer = await db.Customers.FindAsync(key);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            patch.Patch(customer);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(customer);
-        }
-
-        // DELETE odata/Customer(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
-        {
-            Customer customer = await db.Customers.FindAsync(key);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            db.Customers.Remove(customer);
-            await db.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET odata/Customer(5)/Orders
-        [Queryable]
-        public IQueryable<Order> GetOrders([FromODataUri] int key)
+        [HttpPost]
+        [ResponseType(typeof(Customer))]
+        public async Task<IHttpActionResult> PostCustomer(Customer customer)
         {
-            return db.Customers.Where(m => m.Id == key).SelectMany(m => m.Orders);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _contextProvider.Context.Customers.Add(customer);
+            await _contextProvider.Context.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
+        }
+
+        [HttpDelete]
+        [ResponseType(typeof(Customer))]
+        public async Task<IHttpActionResult> DeleteCustomer(int id)
+        {
+            Customer customer = await _contextProvider.Context.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            _contextProvider.Context.Customers.Remove(customer);
+            await _contextProvider.Context.SaveChangesAsync();
+
+            return Ok(customer);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _contextProvider.Context.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool CustomerExists(int key)
+        private bool CustomerExists(int id)
         {
-            return db.Customers.Count(e => e.Id == key) > 0;
+            return _contextProvider.Context.Customers.Count(e => e.Id == id) > 0;
         }
     }
 }
