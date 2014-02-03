@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
+using Breeze.ContextProvider.EF6;
+using Breeze.WebApi2;
 using BreezeCRM.Models;
 
 namespace BreezeCRM.Controllers
 {
+    [BreezeController]
     public class CustomerController : ODataController
     {
-        private CrmContext db = new CrmContext();
+        private readonly CrmContext db = new CrmContext();
+        readonly EFContextProvider<CrmContext> _contextProvider = new EFContextProvider<CrmContext>();
 
         // GET odata/Customer
         [Queryable]
@@ -33,6 +31,11 @@ namespace BreezeCRM.Controllers
             return SingleResult.Create(db.Customers.Where(customer => customer.Id == key));
         }
 
+        [HttpGet]
+        public string Metadata()
+        {
+            return _contextProvider.Metadata();
+        }
         // PUT odata/Customer(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Customer customer)
         {
