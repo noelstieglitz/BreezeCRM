@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -16,7 +12,7 @@ using BreezeCRM.Models;
 namespace BreezeCRM.Controllers
 {
     [BreezeController]
-    public class CustomerController : ApiController
+    public class OrderController : ApiController
     {
         readonly EFContextProvider<NorthwindContext> _contextProvider = new EFContextProvider<NorthwindContext>();
 
@@ -28,38 +24,38 @@ namespace BreezeCRM.Controllers
 
         [HttpGet]
         [Queryable(MaxAnyAllExpressionDepth = 3)]
-        public IQueryable<Customer> Customers()
+        public IQueryable<Order> Orders()
         {
-            return _contextProvider.Context.Customers;
+            return _contextProvider.Context.Orders;
         }
 
-        [ResponseType(typeof(Customer))]
+        [ResponseType(typeof(Order))]
         [HttpGet]
-        public async Task<IHttpActionResult> Customers(int id)
+        public async Task<IHttpActionResult> Orders(int id)
         {
-            Customer customer = await _contextProvider.Context.Customers.FindAsync(id);
-            if (customer == null)
+            Order Order = await _contextProvider.Context.Orders.FindAsync(id);
+            if (Order == null)
             {
                 return NotFound();
             }
 
-            return Ok(customer);
+            return Ok(Order);
         }
 
         [HttpPut]
-        public async Task<IHttpActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IHttpActionResult> PutOrder(int id, Order Order)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id == 0 || id.ToString() != customer.CustomerID)
+            if (id == 0 || id != Order.OrderID)
             {
                 return BadRequest();
             }
 
-            _contextProvider.Context.Entry(customer).State = EntityState.Modified;
+            _contextProvider.Context.Entry(Order).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +63,7 @@ namespace BreezeCRM.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!OrderExists(id))
                 {
                     return NotFound();
                 }
@@ -81,34 +77,34 @@ namespace BreezeCRM.Controllers
         }
 
         [HttpPost]
-        [ResponseType(typeof(Customer))]
-        public async Task<IHttpActionResult> PostCustomer(Customer customer)
+        [ResponseType(typeof(Order))]
+        public async Task<IHttpActionResult> PostOrder(Order Order)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _contextProvider.Context.Customers.Add(customer);
+            _contextProvider.Context.Orders.Add(Order);
             await _contextProvider.Context.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = customer.CustomerID }, customer);
+            return CreatedAtRoute("DefaultApi", new { id = Order.OrderID }, Order);
         }
 
         [HttpDelete]
-        [ResponseType(typeof(Customer))]
-        public async Task<IHttpActionResult> DeleteCustomer(int id)
+        [ResponseType(typeof(Order))]
+        public async Task<IHttpActionResult> DeleteOrder(int id)
         {
-            Customer customer = await _contextProvider.Context.Customers.FindAsync(id);
-            if (customer == null)
+            Order Order = await _contextProvider.Context.Orders.FindAsync(id);
+            if (Order == null)
             {
                 return NotFound();
             }
 
-            _contextProvider.Context.Customers.Remove(customer);
+            _contextProvider.Context.Orders.Remove(Order);
             await _contextProvider.Context.SaveChangesAsync();
 
-            return Ok(customer);
+            return Ok(Order);
         }
 
         protected override void Dispose(bool disposing)
@@ -120,9 +116,9 @@ namespace BreezeCRM.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CustomerExists(int id)
+        private bool OrderExists(int id)
         {
-            return _contextProvider.Context.Customers.Count(e => e.CustomerID == id.ToString()) > 0;
+            return _contextProvider.Context.Orders.Count(e => e.OrderID == id) > 0;
         }
     }
 }

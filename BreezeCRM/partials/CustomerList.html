@@ -1,14 +1,9 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <div ng-controller="CustomerListController">
-        <h2>Customers</h2>
-        <ul>
-            <li ng-repeat="cust in customers">{{cust.LastName}}, {{cust.FirstName}}</li>
-        </ul>
+﻿<div class="container" ng-controller="CustomerListController">
+    <h3>Customers</h3>
+    <div class="form-group">
+        <input type="search" class="input-sm" ng-model="q" placeholder="Filter by Name" />
     </div>
-</body>
-</html>
+    <ul>
+        <li class="row" ng-repeat="cust in customers | filter:q">{{cust.ContactName}}, {{cust.CompanyName}}</li>
+    </ul>
+</div>

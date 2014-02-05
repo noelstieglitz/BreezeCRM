@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 namespace BreezeCRM.Models
 {
-    public partial class Customer
+    public partial class Supplier
     {
-        public Customer()
+        public Supplier()
         {
-            this.Orders = new List<Order>();
-            this.CustomerDemographics = new List<CustomerDemographic>();
+            this.Products = new List<Product>();
         }
 
-        public string CustomerID { get; set; }
+        public int SupplierID { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
         public string ContactTitle { get; set; }
@@ -22,7 +21,7 @@ namespace BreezeCRM.Models
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<CustomerDemographic> CustomerDemographics { get; set; }
+        public string HomePage { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
