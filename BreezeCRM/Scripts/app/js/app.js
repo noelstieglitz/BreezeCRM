@@ -4,7 +4,7 @@ var app = angular.module('myApp', [
   'ngRoute',
   'myApp.services',
   'myApp.controllers',
-  'breeze.angular.q' // tells breeze to use $q instead of Q.js
+  'breeze.angular'
 ]).
 config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -25,8 +25,23 @@ config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'partials/EditCustomer.html'
         })
         .otherwise({ redirectTo: '/customer' });
-}]).value('breeze', breeze);
-
-app.run(['$q', 'use$q', function ($q, use$q) {
-    use$q($q); //now we don't need the Q.js dependency
 }]);
+
+angular.module('myApp')
+       .factory('entityManagerFactory', ['breeze', emFactory]);
+
+function emFactory(breeze) {
+    // Convert properties between server-side PascalCase and client-side camelCase
+    breeze.NamingConvention.camelCase.setAsDefault();
+
+    // Identify the endpoint for the remote data service
+    var serviceName = 'breeze/Customer';
+
+    // the "factory" services exposes two members
+    var factory = {
+        newManager: function () { return new breeze.EntityManager(serviceName); },
+        serviceName: serviceName
+    };
+
+    return factory;
+};

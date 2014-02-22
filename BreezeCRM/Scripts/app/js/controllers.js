@@ -18,8 +18,12 @@ angular.module('myApp.controllers', [])
 
         custDataService.getCustomerById($routeParams.customerId)
             .then(function (data) {
+            debugger;
                 //TODO - refactor to use fromEntityKey (which won't return results[0])
                 $scope.customer = data.results[0];
+        }).catch(function(error) {
+            debugger;
+            console.log("Error calling api: " + error.message);
         });
 
         $scope.destroy = function () {
@@ -40,7 +44,7 @@ angular.module('myApp.controllers', [])
 
         $scope.save = function () {
             debugger;
-            custDataService.createCustomer($scope.customer.customerId, $scope.customer.companyName);
+            custDataService.createCustomer($scope.customer.customerID, $scope.customer.companyName);
             $location.path('/');
         };
     }]);

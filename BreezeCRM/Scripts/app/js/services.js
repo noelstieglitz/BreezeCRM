@@ -4,8 +4,7 @@
 angular.module('myApp.services', [])
   .factory('custDataService', function (breeze) {
 
-      breeze.config.initializeAdapterInstance('modelLibrary', 'backingStore', true);
-
+      breeze.NamingConvention.camelCase.setAsDefault();
       var serviceName = 'breeze/Customer';
       var manager = new breeze.EntityManager(serviceName);
       //manager.enableSaveQueuing(true);
@@ -31,7 +30,7 @@ angular.module('myApp.services', [])
           //        return data.entity;
           //    });
           //TODO - refactor to use fromEntityKey and return data instead of promise
-          var query = breeze.EntityQuery.from('Customers').where('CustomerID', 'eq', id);
+          var query = breeze.EntityQuery.from('Customers').where('customerID', 'eq', id);
           return manager.executeQuery(query);
       }
       function createCustomer(customerId, companyName) { //TODO - pass a VM to the service
@@ -39,7 +38,7 @@ angular.module('myApp.services', [])
           if (!manager.metadataStore.isEmpty()) {
               debugger;//why?
           }
-          var newEntity = manager.createEntity('Customer', { CustomerID: customerId, CompanyName: companyName });
+          var newEntity = manager.createEntity('Customer', { customerID: customerId, companyName: companyName });
           manager.saveChanges();
           return newEntity;
       }

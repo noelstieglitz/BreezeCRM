@@ -5,6 +5,6 @@
         <input type="search" class="input-sm" data-ng-model="q" placeholder="Filter by Name" />
     </div>
     <ul>
-        <li data-ng-repeat="cust in customers | filter:q">{{cust.ContactName}}, {{cust.CompanyName}} <small><a href="#/edit/{{cust.CustomerID}}">[edit]</a></small></li>
+        <li data-ng-repeat="cust in customers | filter:q">{{cust.contactName}}, {{cust.companyName}} <small><a href="#/edit/{{cust.customerID}}">[edit]</a></small></li>
     </ul>
 </div>
