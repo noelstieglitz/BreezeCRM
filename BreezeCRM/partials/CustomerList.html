@@ -1,9 +1,10 @@
-﻿<div class="container" ng-controller="CustomerListController">
+﻿<div class="container" data-ng-controller="CustomerListController">
     <h3>Customers</h3>
+    <h4><a href="#/new">New</a></h4>
     <div class="form-group">
-        <input type="search" class="input-sm" ng-model="q" placeholder="Filter by Name" />
+        <input type="search" class="input-sm" data-ng-model="q" placeholder="Filter by Name" />
     </div>
     <ul>
-        <li class="row" ng-repeat="cust in customers | filter:q">{{cust.ContactName}}, {{cust.CompanyName}}</li>
+        <li data-ng-repeat="cust in customers | filter:q">{{cust.ContactName}}, {{cust.CompanyName}} <small><a href="#/edit/{{cust.CustomerID}}">[edit]</a></small></li>
     </ul>
 </div>

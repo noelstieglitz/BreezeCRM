@@ -17,19 +17,19 @@ namespace BreezeCRM.Models.Mapping
                 .HasMaxLength(10);
 
             // Table & Column Mappings
-            this.ToTable("CustomerDemographics");
+            //this.ToTable("CustomerDemographics");
             this.Property(t => t.CustomerTypeID).HasColumnName("CustomerTypeID");
             this.Property(t => t.CustomerDesc).HasColumnName("CustomerDesc");
 
             // Relationships
-            this.HasMany(t => t.Customers)
-                .WithMany(t => t.CustomerDemographics)
-                .Map(m =>
-                    {
-                        m.ToTable("CustomerCustomerDemo");
-                        m.MapLeftKey("CustomerTypeID");
-                        m.MapRightKey("CustomerID");
-                    });
+            //this.HasMany(t => t.Customers)
+            //    .WithMany(t => t.CustomerDemographics)
+            //    .Map(m =>
+            //        {
+            //            m.ToTable("CustomerCustomerDemo");
+            //            m.MapLeftKey("CustomerTypeID");
+            //            m.MapRightKey("CustomerID");
+            //        });
 
 
         }

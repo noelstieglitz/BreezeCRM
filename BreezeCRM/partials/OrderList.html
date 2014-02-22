@@ -1,6 +1,6 @@
-﻿<div class="container" ng-controller="OrderListController">
+﻿<div class="container" data-ng-controller="OrderListController">
     <h2>Orders</h2>
     <ul>
-        <li ng-repeat="order in orders">{{order.OrderNumber}}, {{order.DateOrdered}}</li>
+        <li data-ng-repeat="order in orders">{{order.OrderNumber}}, {{order.DateOrdered}}</li>
     </ul>
 </div>
