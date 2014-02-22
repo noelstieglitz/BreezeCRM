@@ -4,7 +4,8 @@ var app = angular.module('myApp', [
   'ngRoute',
   'myApp.services',
   'myApp.controllers',
-  'breeze.angular'
+  'breeze.angular',
+  'breeze.directives'
 ]).
 config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -25,10 +26,19 @@ config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'partials/EditCustomer.html'
         })
         .otherwise({ redirectTo: '/customer' });
-}]);
+}]).config(['zDirectivesConfigProvider', configDirective]);
 
 angular.module('myApp')
        .factory('entityManagerFactory', ['breeze', emFactory]);
+
+
+//Configure the Breeze Validation Directive for bootstrap 2
+function configDirective(cfg) {
+    // Custom template with warning icon before the error message
+    cfg.zValidateTemplate =
+       '<span class="invalid"><span style="color: red;" class="glyphicon glyphicon-warning-sign"></span>' +
+       ' %error%</span>';
+};
 
 function emFactory(breeze) {
     // Convert properties between server-side PascalCase and client-side camelCase

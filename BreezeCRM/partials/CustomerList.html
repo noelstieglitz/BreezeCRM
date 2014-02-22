@@ -1,10 +1,17 @@
-﻿<div class="container" data-ng-controller="CustomerListController">
-    <h3>Customers</h3>
-    <h4><a href="#/new">New</a></h4>
-    <div class="form-group">
-        <input type="search" class="input-sm" data-ng-model="q" placeholder="Filter by Name" />
+﻿<div data-ng-controller="CustomerListController">
+    
+        <h3 style="margin-top:8px;">Customers </h3>
+        <a href="#/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
+    <hr style="margin:8px;"/>
+    <div class="panel panel-default">
+        <div class="panel-heading">Filter Results</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="search" class="input-sm" data-ng-model="q" placeholder="Contact Name" />
+            </div>
+        </div>
     </div>
     <ul>
-        <li data-ng-repeat="cust in customers | filter:q">{{cust.contactName}}, {{cust.companyName}} <small><a href="#/edit/{{cust.customerID}}">[edit]</a></small></li>
+        <li data-ng-repeat="cust in customers | filter:q"><a href="#/edit/{{cust.customerID}}"><span class="glyphicon glyphicon-edit"></span> </a> {{cust.contactName}}, {{cust.companyName}}</li>
     </ul>
 </div>

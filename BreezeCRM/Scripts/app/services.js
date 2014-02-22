@@ -11,17 +11,23 @@ angular.module('myApp.services', [])
 
       return {
           getAllCustomers: getAllCustomers,
-          createCustomer: createCustomer,
-          getCustomerById: getCustomerById
+          saveChanges: saveChanges,
+          getCustomerById: getCustomerById,
+          newCustomer: newCustomer,
+          deleteCustomer: deleteCustomer
       };
+      function deleteCustomer(customer) {
+          customer.entityAspect.setDeleted();
+          manager.saveChanges();
+      }
 
       function getAllCustomers() {
+          debugger;
           var query = breeze.EntityQuery.from('Customers');
           return manager.executeQuery(query);
       }
 
       function getCustomerById(id) {
-          debugger;
           //return manager.fetchEntityByKey('Customer', id, true /*check cache before querying DB*/);
           //return manager.fetchEntityByKey('Customer', id);
           //manager.fetchEntityByKey("Customer", id)
@@ -33,13 +39,11 @@ angular.module('myApp.services', [])
           var query = breeze.EntityQuery.from('Customers').where('customerID', 'eq', id);
           return manager.executeQuery(query);
       }
-      function createCustomer(customerId, companyName) { //TODO - pass a VM to the service
-
-          if (!manager.metadataStore.isEmpty()) {
-              debugger;//why?
-          }
-          var newEntity = manager.createEntity('Customer', { customerID: customerId, companyName: companyName });
+      function saveChanges() {
           manager.saveChanges();
-          return newEntity;
+      }
+
+      function newCustomer(customer) {
+          return manager.createEntity('Customer', customer);
       }
   });

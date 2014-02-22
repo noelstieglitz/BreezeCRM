@@ -120,9 +120,9 @@
     <Content Include="Content\app.css" />
     <Content Include="partials\EditCustomer.html" />
     <Content Include="partials\OrderList.html" />
-    <Content Include="Scripts\app\js\app.js" />
-    <Content Include="Scripts\app\js\controllers.js" />
-    <Content Include="Scripts\app\js\services.js" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers.js" />
+    <Content Include="Scripts\app\services.js" />
     <Content Include="partials\CustomerList.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

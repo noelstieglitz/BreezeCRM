@@ -1,41 +1,37 @@
-﻿<div class="container">
-    <form novalidate data-z-validate role="form" class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Customer ID</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" name="customerId" data-ng-model="customer.customerID" required>
+﻿<div class="panel panel-default">
+    <div class="panel-heading">Customer Details</div>
+    <div class="panel-body">
+        <form novalidate role="form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Customer ID</label>
+                <div class="col-sm-4">
+                    <input type="text" autofocus class="form-control" name="customerId" data-ng-model="customer.customerID" data-z-validate>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Customer Name</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" name="customerName" data-ng-model="customer.companyName" required>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Company Name</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="customerName" data-ng-model="customer.companyName" data-z-validate>
+                </div>
             </div>
-        </div>
-
-        <!--<div class="control-group" data-ng-class="{error: myForm.site.$invalid && !myForm.site.$pristine}">
-                <label>Company Name</label>
-                <input type="text" name="site" data-ng-model="project.site" required>
-                <span data-ng-show="myForm.site.$error.required && !myForm.name.$pristine" class="help-inline">
-                    *
-                </span>
-                <span data-ng-show="myForm.site.$error.url" class="help-inline">
-                    Not a URL
-                </span>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Contact Name</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="contactName" data-ng-model="customer.contactName" data-z-validate>
+                </div>
             </div>
-
-            <label>Description</label>
-            <textarea name="description" data-ng-model="project.description"></textarea>
-            -->
-        <br>
-        <a href="#/" class="btn">Cancel</a>
-        <button data-ng-click="save()" ng-disabled="myForm.$invalid"
-                class="btn btn-primary">
-            Save
-        </button>
-        <button data-ng-click="destroy()"
-                data-ng-show="customer.$remove" class="btn btn-danger">
-            Delete
-        </button>
-    </form>
+            <br>
+            <hr/>
+                <button data-ng-click="cancel()" class="btn"><span class="glyphicon glyphicon-circle-arrow-left"></span> Cancel</button>
+                <button data-ng-click="save()" ng-disabled="myForm.$invalid"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-ok"></span> Save
+                </button>
+                <button data-ng-click="delete()"
+                        data-ng-show="canDelete" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Delete
+                </button>
+        </form>
+    </div>
 </div>
