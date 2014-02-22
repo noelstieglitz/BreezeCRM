@@ -18,8 +18,7 @@ angular.module('myApp.controllers', [])
 
         custDataService.getCustomerById($routeParams.customerId)
             .then(function (data) {
-                //TODO - refactor to use fromEntityKey (which won't return results[0])
-                $scope.customer = data.results[0];
+                $scope.customer = data.entity;
             }).catch(function (error) {
                 console.log("Error calling api: " + error.message);
             });

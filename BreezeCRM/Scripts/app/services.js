@@ -22,23 +22,14 @@ angular.module('myApp.services', [])
       }
 
       function getAllCustomers() {
-          debugger;
           var query = breeze.EntityQuery.from('Customers');
           return manager.executeQuery(query);
       }
 
       function getCustomerById(id) {
-          //return manager.fetchEntityByKey('Customer', id, true /*check cache before querying DB*/);
-          //return manager.fetchEntityByKey('Customer', id);
-          //manager.fetchEntityByKey("Customer", id)
-          //    .then(function (data) {
-          //    debugger;
-          //        return data.entity;
-          //    });
-          //TODO - refactor to use fromEntityKey and return data instead of promise
-          var query = breeze.EntityQuery.from('Customers').where('customerID', 'eq', id);
-          return manager.executeQuery(query);
+          return manager.fetchEntityByKey('Customer', id, true /*check cache before querying DB*/);
       }
+
       function saveChanges() {
           manager.saveChanges();
       }
