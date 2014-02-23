@@ -1,7 +1,8 @@
 ﻿<div data-ng-controller="CustomerListController">
     
         <h3 style="margin-top:8px;">Customers </h3>
-        <a href="#/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
+    <a href="#/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
+    <button data-ng-click="saveChanges()">Persist Items makred Deleted</button>
     <hr style="margin:8px;"/>
     <div class="panel panel-default">
         <div class="panel-heading">Filter Results</div>
@@ -12,6 +13,6 @@
         </div>
     </div>
     <ul>
-        <li data-ng-repeat="cust in customers | filter:q"><a href="#/edit/{{cust.customerID}}"><span class="glyphicon glyphicon-edit"></span> </a> {{cust.contactName}}, {{cust.companyName}}</li>
+        <li data-ng-repeat="cust in customers | filter:q"><a href="#/edit/{{cust.customerID}}"><span class="glyphicon glyphicon-edit"></span> </a> {{cust.contactName}}, {{cust.companyName}} <button data-ng-click="markForDelete(cust)"><span class="glyphicon glyphicon-remove"></span></button> </li>
     </ul>
 </div>

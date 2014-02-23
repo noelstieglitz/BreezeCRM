@@ -7,7 +7,6 @@ angular.module('myApp.services', [])
       breeze.NamingConvention.camelCase.setAsDefault();
       var serviceName = 'breeze/Customer';
       var manager = new breeze.EntityManager(serviceName);
-      //manager.enableSaveQueuing(true);
 
       return {
           getAllCustomers: getAllCustomers,
@@ -16,9 +15,13 @@ angular.module('myApp.services', [])
           newCustomer: newCustomer,
           deleteCustomer: deleteCustomer
       };
-      function deleteCustomer(customer) {
+      function deleteCustomer(customer, persist) {
+          debugger;
           customer.entityAspect.setDeleted();
-          manager.saveChanges();
+
+          if (persist) {
+              saveChanges();
+          }
       }
 
       function getAllCustomers() {
@@ -31,7 +34,17 @@ angular.module('myApp.services', [])
       }
 
       function saveChanges() {
-          manager.saveChanges();
+          debugger;
+          if (manager.hasChanges()) {
+              manager.saveChanges().then(function () {
+                  console.log('Changes saved.');
+              }).catch(function (error) {
+                  console.log('Error saving changeset: ' + error);
+              });
+          }
+          else {
+              console.log('no changes to save.');
+          }
       }
 
       function newCustomer(customer) {
