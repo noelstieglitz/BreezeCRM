@@ -1,18 +1,45 @@
 ﻿<div data-ng-controller="CustomerListController">
-    
-        <h3 style="margin-top:8px;">Customers </h3>
-    <a href="#/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
-    <button data-ng-click="saveChanges()">Persist Items makred Deleted</button>
-    <hr style="margin:8px;"/>
-    <div class="panel panel-default">
-        <div class="panel-heading">Filter Results</div>
-        <div class="panel-body">
-            <div class="form-group">
-                <input type="search" class="input-sm" data-ng-model="q" placeholder="Contact Name" />
+    <div class="row">
+        <div class="col-md-3">
+            <a href="#/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
+            <br />
+            <button class="btn" data-ng-click="saveChanges()">Save Changes</button>
+            <hr style="margin:4px;" />
+            <div class="panel panel-default">
+                <div class="panel-heading">Filter Results</div>
+                <div class="panel-body">
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="input-sm" data-ng-model="cust.customerName" placeholder="Customer ID" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="input-sm" data-ng-model="q" placeholder="Contact Name" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="input-sm" data-ng-model="q" placeholder="Company Name" />
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <button class="btn"><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 ">
+            <div class="panel panel-info" data-ng-repeat="cust in customers">
+                <div class="panel-heading">
+                    <div class="panel-title">{{cust.companyName}}</div>
+                </div>
+                <div class="panel panel-body">
+                    <label>Country</label>  {{cust.country}}<br />
+                    <label>Contact</label> {{cust.contactName}} <br />
+                    <label>Phone</label>  {{cust.phone}}<br />
+                    <label>Fax</label>  {{cust.fax}}<br />
+                    <button class="btn btn-xs" data-ng-click="edit(cust.customerID)"><span class="glyphicon glyphicon-edit"></span> Edit </button>
+                    <button class="btn btn-xs btn-danger" data-ng-click="markForDelete(cust)"><span class="glyphicon glyphicon-remove"></span> Delete </button>
+                </div>
             </div>
         </div>
     </div>
-    <ul>
-        <li data-ng-repeat="cust in customers | filter:q"><a href="#/edit/{{cust.customerID}}"><span class="glyphicon glyphicon-edit"></span> </a> {{cust.contactName}}, {{cust.companyName}} <button data-ng-click="markForDelete(cust)"><span class="glyphicon glyphicon-remove"></span></button> </li>
-    </ul>
 </div>

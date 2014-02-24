@@ -119,7 +119,6 @@
     <Content Include="index.html" />
     <Content Include="Content\app.css" />
     <Content Include="partials\EditCustomer.html" />
-    <Content Include="partials\OrderList.html" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers.js" />
     <Content Include="Scripts\app\services.js" />
@@ -148,7 +147,6 @@
     <Compile Include="App_Start\BreezeWebApiConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

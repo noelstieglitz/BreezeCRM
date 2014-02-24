@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('myApp.controllers', [])
-    .controller('CustomerListController', ['$scope', 'custDataService', function ($scope, custDataService) {
+    .controller('CustomerListController', ['$scope', '$location', 'custDataService', function ($scope, $location, custDataService) {
 
         custDataService.getAllCustomers()
             .then(function (data) {
@@ -15,14 +15,14 @@ angular.module('myApp.controllers', [])
             custDataService.deleteCustomer(customer, false);
         };
 
-    $scope.saveChanges = function() {
-        debugger;
-        custDataService.saveChanges();
-    };
+        $scope.edit = function (id) {
+            location.href = '#/edit/' + id;
+        };
 
-}]).controller('OrderListController', ['$scope', 'custDataService', function ($scope, custDataService) {
-        //TODO
-        $scope.orders = [{ 'DateOrdered': '11/11/2013', 'OrderNumber': '12345' }];
+        $scope.saveChanges = function () {
+            debugger;
+            custDataService.saveChanges();
+        };
 
     }]).controller('EditCustomerController', ['$scope', '$location', '$routeParams', 'custDataService', function ($scope, $location, $routeParams, custDataService) {
 

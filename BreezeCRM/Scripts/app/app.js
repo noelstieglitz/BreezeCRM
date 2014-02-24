@@ -13,10 +13,6 @@ config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'partials/CustomerList.html',
             controller: 'CustomerListController'
         })
-        .when('/order', {
-            templateUrl: 'partials/OrderList.html',
-            controller: 'OrderListController'
-        })
         .when('/edit/:customerId', {
             controller: 'EditCustomerController',
             templateUrl: 'partials/EditCustomer.html'
