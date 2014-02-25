@@ -34,7 +34,6 @@ angular.module('crmApp.services', [])
                   query = query.where('contactName', 'Contains', criteria.contactName);
               }
               if (criteria.minFreightCost) {
-                  //query = query.where('orders', 'any', 'orderDetails', 'all', 'quantity', '>', criteria.minFreightCost);
                   query = query.where('orders', 'any', 'freight', '>', criteria.minFreightCost);
               }
           }
@@ -47,7 +46,6 @@ angular.module('crmApp.services', [])
       }
 
       function saveChanges() {
-          debugger;
           if (manager.hasChanges()) {
               manager.saveChanges().then(function () {
                   console.log('Changes saved.');

@@ -13,11 +13,9 @@ angular.module('crmApp.controllers', [])
 
         $scope.search = function (criteria) {
             custDataService.getAllCustomers(criteria).then(function (data) {
-                    debugger;
                 $scope.customers = data.results;
             })
             .catch(function (error) {
-                debugger;
                 console.log("Error calling api: " + error.message);
             });
         };
@@ -31,7 +29,6 @@ angular.module('crmApp.controllers', [])
         };
 
         $scope.saveChanges = function () {
-            debugger;
             custDataService.saveChanges();
         };
 
@@ -50,7 +47,6 @@ angular.module('crmApp.controllers', [])
         };
 
         $scope.delete = function () {
-            debugger;
             custDataService.deleteCustomer($scope.customer, true);
             $location.path('/');
         };
