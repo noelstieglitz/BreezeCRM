@@ -1,7 +1,7 @@
 ﻿<div data-ng-controller="CustomerListController">
     <div class="row">
         <div class="col-md-3">
-            <a href="#/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
+            <a href="#/customer/new"><span class="glyphicon glyphicon-plus"></span> New Customer</a>
             <br />
             <button class="btn" data-ng-click="saveChanges()">Save Changes</button>
             <hr style="margin:4px;" />
@@ -10,17 +10,17 @@
                 <div class="panel-body">
                     <form role="form" class="form-inline">
                         <div class="form-group">
-                            <input type="text" class="input-sm" data-ng-model="cust.customerName" placeholder="Customer ID" />
+                            <input type="text" class="input-sm" data-ng-model="criteria.customerID" placeholder="Customer ID" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="input-sm" data-ng-model="q" placeholder="Contact Name" />
+                            <input type="text" class="input-sm" data-ng-model="criteria.contactName" placeholder="Contact Name" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="input-sm" data-ng-model="q" placeholder="Company Name" />
+                            <input type="text" class="input-sm" data-ng-model="criteria.minFreightCost" placeholder="Min. Freight Cost" />
                         </div>
                         <hr />
                         <div class="form-group">
-                            <button class="btn"><span class="glyphicon glyphicon-search"></span> Search</button>
+                            <button class="btn" data-ng-click="search(criteria)"><span class="glyphicon glyphicon-search"></span> Search</button>
                         </div>
                     </form>
                 </div>
@@ -32,10 +32,13 @@
                     <div class="panel-title">{{cust.companyName}}</div>
                 </div>
                 <div class="panel panel-body">
+                    <label>ID</label>  {{cust.customerID}}<br />
                     <label>Country</label>  {{cust.country}}<br />
                     <label>Contact</label> {{cust.contactName}} <br />
                     <label>Phone</label>  {{cust.phone}}<br />
                     <label>Fax</label>  {{cust.fax}}<br />
+                   
+
                     <button class="btn btn-xs" data-ng-click="edit(cust.customerID)"><span class="glyphicon glyphicon-edit"></span> Edit </button>
                     <button class="btn btn-xs btn-danger" data-ng-click="markForDelete(cust)"><span class="glyphicon glyphicon-remove"></span> Delete </button>
                 </div>

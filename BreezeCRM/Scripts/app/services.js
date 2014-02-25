@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 /* Services */
-angular.module('myApp.services', [])
+angular.module('crmApp.services', [])
   .factory('custDataService', function (breeze) {
 
       breeze.NamingConvention.camelCase.setAsDefault();
@@ -15,8 +15,8 @@ angular.module('myApp.services', [])
           newCustomer: newCustomer,
           deleteCustomer: deleteCustomer
       };
+
       function deleteCustomer(customer, persist) {
-          debugger;
           customer.entityAspect.setDeleted();
 
           if (persist) {
@@ -24,8 +24,21 @@ angular.module('myApp.services', [])
           }
       }
 
-      function getAllCustomers() {
+      function getAllCustomers(criteria) {
           var query = breeze.EntityQuery.from('Customers');
+          if (criteria) {
+              if (criteria.customerID) {
+                  query = query.where('customerID', 'eq', criteria.customerID);
+              }
+              if (criteria.contactName) {
+                  query = query.where('contactName', 'Contains', criteria.contactName);
+              }
+              if (criteria.minFreightCost) {
+                  //query = query.where('orders', 'any', 'orderDetails', 'all', 'quantity', '>', criteria.minFreightCost);
+                  query = query.where('orders', 'any', 'freight', '>', criteria.minFreightCost);
+              }
+          }
+
           return manager.executeQuery(query);
       }
 

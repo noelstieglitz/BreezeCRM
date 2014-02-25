@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-var app = angular.module('myApp', [
+var app = angular.module('crmApp', [
   'ngRoute',
-  'myApp.services',
-  'myApp.controllers',
+  'crmApp.services',
+  'crmApp.controllers',
   'breeze.angular',
   'breeze.directives'
 ]).
@@ -13,22 +13,22 @@ config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'partials/CustomerList.html',
             controller: 'CustomerListController'
         })
-        .when('/edit/:customerId', {
+        .when('/customer/:customerId/edit', {
             controller: 'EditCustomerController',
             templateUrl: 'partials/EditCustomer.html'
         })
-        .when('/new', {
+        .when('/customer/new', {
             controller: 'CreateCustomerController',
             templateUrl: 'partials/EditCustomer.html'
         })
         .otherwise({ redirectTo: '/customer' });
-}]).config(['zDirectivesConfigProvider', configDirective]);
+}]).config(['zDirectivesConfigProvider', configDirective]); //configure breeze validation directive
 
-angular.module('myApp')
-       .factory('entityManagerFactory', ['breeze', emFactory]);
+angular.module('crmApp')
+       .factory('entityManagerFactory', ['breeze', emFactory]); //breeze service
 
 
-//Configure the Breeze Validation Directive for bootstrap 2
+//Configure the Breeze Validation Directive for bootstrap 3
 function configDirective(cfg) {
     // Custom template with warning icon before the error message
     cfg.zValidateTemplate =

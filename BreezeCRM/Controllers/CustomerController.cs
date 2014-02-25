@@ -23,7 +23,7 @@ namespace BreezeCRM.Controllers
         }
 
         [HttpGet]
-        [Queryable(MaxAnyAllExpressionDepth = 3)]
+        [Queryable(MaxAnyAllExpressionDepth = 5)]
         public IQueryable<Customer> Customers()
         {
             return _contextProvider.Context.Customers;
@@ -32,6 +32,9 @@ namespace BreezeCRM.Controllers
         [HttpPost]
         public SaveResult SaveChanges(JObject saveBundle)
         {
+            //TODO - if this were a real world app, we would
+            //intercept the POST request and validate
+            //http://www.breezejs.com/documentation/efcontextprovider#SaveInterception
             return _contextProvider.SaveChanges(saveBundle);
         }
 

@@ -121,6 +121,7 @@
     <Content Include="partials\EditCustomer.html" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers.js" />
+    <Content Include="Scripts\app\directives.js" />
     <Content Include="Scripts\app\services.js" />
     <Content Include="partials\CustomerList.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

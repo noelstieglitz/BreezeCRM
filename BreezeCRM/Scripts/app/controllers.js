@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-angular.module('myApp.controllers', [])
+angular.module('crmApp.controllers', [])
     .controller('CustomerListController', ['$scope', '$location', 'custDataService', function ($scope, $location, custDataService) {
 
-        custDataService.getAllCustomers()
+        custDataService.getAllCustomers(null)
             .then(function (data) {
                 $scope.customers = data.results;
             })
@@ -11,12 +11,23 @@ angular.module('myApp.controllers', [])
                 console.log("Error calling api: " + error.message);
             });
 
+        $scope.search = function (criteria) {
+            custDataService.getAllCustomers(criteria).then(function (data) {
+                    debugger;
+                $scope.customers = data.results;
+            })
+            .catch(function (error) {
+                debugger;
+                console.log("Error calling api: " + error.message);
+            });
+        };
+
         $scope.markForDelete = function (customer) {
             custDataService.deleteCustomer(customer, false);
         };
 
         $scope.edit = function (id) {
-            location.href = '#/edit/' + id;
+            location.href = '#/customer/' + id + '/edit/';
         };
 
         $scope.saveChanges = function () {
