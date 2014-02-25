@@ -13,15 +13,17 @@ angular.module('crmApp.services', [])
           saveChanges: saveChanges,
           getCustomerById: getCustomerById,
           newCustomer: newCustomer,
-          deleteCustomer: deleteCustomer
+          deleteCustomer : deleteCustomer
       };
 
       function deleteCustomer(customer, persist) {
+
           customer.entityAspect.setDeleted();
 
           if (persist) {
               saveChanges();
           }
+
       }
 
       function getAllCustomers(criteria, sort, page) {
@@ -53,7 +55,7 @@ angular.module('crmApp.services', [])
           query = query.take(5).inlineCount(); //paging
 
           //projection
-          query = query.select('customerID, contactName, country, phone, fax');
+          //query = query.select('customerID, contactName, country, phone, fax');
           
           //eager load
           //query = query.expand('orders');
