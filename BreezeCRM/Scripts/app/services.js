@@ -24,7 +24,7 @@ angular.module('crmApp.services', [])
           }
       }
 
-      function getAllCustomers(criteria, sort) {
+      function getAllCustomers(criteria, sort, page) {
           var query = breeze.EntityQuery.from('Customers');
 
           if (criteria) {
@@ -41,7 +41,15 @@ angular.module('crmApp.services', [])
 
           if (sort) {
               query = query.orderBy(sort);
+          } else {
+              query = query.orderBy('companyName');
           }
+
+          debugger;
+          if (page) {
+              query = query.skip(5 * (page-1));
+          }
+          query = query.take(5).inlineCount(); //paging
 
           return manager.executeQuery(query);
       }

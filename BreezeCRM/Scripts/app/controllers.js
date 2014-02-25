@@ -3,21 +3,41 @@
 angular.module('crmApp.controllers', [])
     .controller('CustomerListController', ['$scope', '$location', 'custDataService', function ($scope, $location, custDataService) {
 
-        custDataService.getAllCustomers(null)
-            .then(function (data) {
-                $scope.customers = data.results;
-            })
+    
+        $scope.search = function () {
+            debugger;
+            custDataService.getAllCustomers($scope.criteria, $scope.sortOption, $scope.currentPage)
+                .then(function (data) {
+                    debugger;
+                    $scope.customers = data.results;
+                    $scope.totalItems = data.inlineCount;
+                    $scope.totalPages = data.inlineCount / 5;
+                })
             .catch(function (error) {
                 console.log('Error calling api: ' + error.message);
             });
+        };
 
-        $scope.search = function (criteria) {
-            custDataService.getAllCustomers(criteria, $scope.sortOption).then(function (data) {
-                $scope.customers = data.results;
-            })
-            .catch(function (error) {
-                console.log('Error calling api: ' + error.message);
-            });
+        $scope.search(null, 'companyName', 1);
+
+        //$scope.$watchCollection('customers', function (newValue) {
+        //    setPagination(newValue);
+        //});
+
+        //function setPagination(newValue) {
+        //    if (!newValue) {
+        //        return;
+        //    }
+
+        //    $scope.totalItems = newValue.length;
+        //    $scope.currentPage = 1;
+        //    $scope.maxSize = 5;
+
+        //}
+
+        $scope.setPage = function (pageNo) {
+            $scope.currentPage = pageNo;
+            $scope.search();
         };
 
         $scope.markForDelete = function (customer) {

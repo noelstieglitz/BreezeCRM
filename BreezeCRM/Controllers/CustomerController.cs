@@ -23,7 +23,7 @@ namespace BreezeCRM.Controllers
         }
 
         [HttpGet]
-        [Queryable(MaxAnyAllExpressionDepth = 5)]
+        [BreezeQueryable]
         public IQueryable<Customer> Customers()
         {
             return _contextProvider.Context.Customers;

@@ -19,9 +19,9 @@
                             <input type="text" class="input-sm" data-ng-model="criteria.minFreightCost" placeholder="Min. Freight Cost" />
                         </div>
                         <div class="form-group">
-                            <label style="margin:4px">sort by...</label><br/>
+                            <label style="margin:4px">sort by...</label><br />
                             <input type="radio" ng-model="sortOption" value="country">  Country <br />
-                            <input type="radio" ng-model="sortOption" value="contactName"> Name (desc) <br />
+                            <input type="radio" ng-model="sortOption" value="contactName desc"> Name (desc) <br />
                         </div>
                         <hr />
                         <div class="form-group">
@@ -32,6 +32,7 @@
             </div>
         </div>
         <div class="col-md-9 ">
+            <pagination on-select-page="setPage(page)" items-per-page="5" direction-links="false" total-items="totalItems" page="currentPage" num-pages="smallnumPages"></pagination>
             <div class="panel panel-info" data-ng-repeat="cust in customers">
                 <div class="panel-heading">
                     <div class="panel-title">{{cust.companyName}}</div>
@@ -42,11 +43,14 @@
                     <label>Contact</label> {{cust.contactName}} <br />
                     <label>Phone</label>  {{cust.phone}}<br />
                     <label>Fax</label>  {{cust.fax}}<br />
-                   
+
 
                     <button class="btn btn-xs" data-ng-click="edit(cust.customerID)"><span class="glyphicon glyphicon-edit"></span> Edit </button>
                     <button class="btn btn-xs btn-danger" data-ng-click="markForDelete(cust)"><span class="glyphicon glyphicon-remove"></span> Delete </button>
                 </div>
+            </div>
+            <br />
+            <div>
             </div>
         </div>
     </div>

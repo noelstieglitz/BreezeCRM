@@ -5,7 +5,8 @@ var app = angular.module('crmApp', [
   'crmApp.services',
   'crmApp.controllers',
   'breeze.angular',
-  'breeze.directives'
+  'breeze.directives',
+  'ui.bootstrap'
 ]).
 config(['$routeProvider', function ($routeProvider) {
     $routeProvider
