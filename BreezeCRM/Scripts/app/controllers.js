@@ -5,7 +5,6 @@ angular.module('crmApp.controllers', [])
 
     
         $scope.search = function () {
-            debugger;
             custDataService.getAllCustomers($scope.criteria, $scope.sortOption, $scope.currentPage)
                 .then(function (data) {
                     debugger;
@@ -18,22 +17,7 @@ angular.module('crmApp.controllers', [])
             });
         };
 
-        $scope.search(null, 'companyName', 1);
-
-        //$scope.$watchCollection('customers', function (newValue) {
-        //    setPagination(newValue);
-        //});
-
-        //function setPagination(newValue) {
-        //    if (!newValue) {
-        //        return;
-        //    }
-
-        //    $scope.totalItems = newValue.length;
-        //    $scope.currentPage = 1;
-        //    $scope.maxSize = 5;
-
-        //}
+        $scope.search();
 
         $scope.setPage = function (pageNo) {
             $scope.currentPage = pageNo;
