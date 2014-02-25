@@ -24,8 +24,9 @@ angular.module('crmApp.services', [])
           }
       }
 
-      function getAllCustomers(criteria) {
+      function getAllCustomers(criteria, sort) {
           var query = breeze.EntityQuery.from('Customers');
+
           if (criteria) {
               if (criteria.customerID) {
                   query = query.where('customerID', 'eq', criteria.customerID);
@@ -36,6 +37,10 @@ angular.module('crmApp.services', [])
               if (criteria.minFreightCost) {
                   query = query.where('orders', 'any', 'freight', '>', criteria.minFreightCost);
               }
+          }
+
+          if (sort) {
+              query = query.orderBy(sort);
           }
 
           return manager.executeQuery(query);

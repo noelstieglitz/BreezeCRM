@@ -8,15 +8,15 @@ angular.module('crmApp.controllers', [])
                 $scope.customers = data.results;
             })
             .catch(function (error) {
-                console.log("Error calling api: " + error.message);
+                console.log('Error calling api: ' + error.message);
             });
 
         $scope.search = function (criteria) {
-            custDataService.getAllCustomers(criteria).then(function (data) {
+            custDataService.getAllCustomers(criteria, $scope.sortOption).then(function (data) {
                 $scope.customers = data.results;
             })
             .catch(function (error) {
-                console.log("Error calling api: " + error.message);
+                console.log('Error calling api: ' + error.message);
             });
         };
 
@@ -38,11 +38,11 @@ angular.module('crmApp.controllers', [])
             .then(function (data) {
                 $scope.customer = data.entity;
             }).catch(function (error) {
-                console.log("Error calling api: " + error.message);
+                console.log('Error calling api: ' + error.message);
             });
 
         $scope.cancel = function () {
-            $scope.customer.entityAspect.rejectChanges(); //undo pending changes and reset entityState to "Unchanged"
+            $scope.customer.entityAspect.rejectChanges(); //undo pending changes and reset entityState to 'Unchanged'
             $location.path('/');
         };
 

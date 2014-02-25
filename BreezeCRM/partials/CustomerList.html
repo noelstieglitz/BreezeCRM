@@ -18,6 +18,11 @@
                         <div class="form-group">
                             <input type="text" class="input-sm" data-ng-model="criteria.minFreightCost" placeholder="Min. Freight Cost" />
                         </div>
+                        <div class="form-group">
+                            <label style="margin:4px">sort by...</label><br/>
+                            <input type="radio" ng-model="sortOption" value="country">  Country <br />
+                            <input type="radio" ng-model="sortOption" value="contactName"> Name (desc) <br />
+                        </div>
                         <hr />
                         <div class="form-group">
                             <button class="btn" data-ng-click="search(criteria)"><span class="glyphicon glyphicon-search"></span> Search</button>
