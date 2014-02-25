@@ -39,17 +39,24 @@ angular.module('crmApp.services', [])
               }
           }
 
+          //sort
           if (sort) {
               query = query.orderBy(sort);
           } else {
               query = query.orderBy('companyName');
           }
 
-          debugger;
+          //page
           if (page) {
               query = query.skip(5 * (page-1));
           }
           query = query.take(5).inlineCount(); //paging
+
+          //projection
+          query = query.select('customerID, contactName, country, phone, fax');
+          
+          //eager load
+          //query = query.expand('orders');
 
           return manager.executeQuery(query);
       }

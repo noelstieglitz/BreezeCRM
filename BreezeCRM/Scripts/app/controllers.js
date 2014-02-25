@@ -7,7 +7,6 @@ angular.module('crmApp.controllers', [])
         $scope.search = function () {
             custDataService.getAllCustomers($scope.criteria, $scope.sortOption, $scope.currentPage)
                 .then(function (data) {
-                    debugger;
                     $scope.customers = data.results;
                     $scope.totalItems = data.inlineCount;
                     $scope.totalPages = data.inlineCount / 5;

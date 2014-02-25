@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
 using Breeze.ContextProvider;
 using Breeze.ContextProvider.EF6;
 using Breeze.WebApi2;
@@ -23,7 +21,8 @@ namespace BreezeCRM.Controllers
         }
 
         [HttpGet]
-        [BreezeQueryable]
+        //[BreezeQueryable()] //Don't use the QueryableAttribute 
+        //http://stackoverflow.com/questions/20360417/breeze-newvalue-getproperty-is-not-a-function/20365167#20365167
         public IQueryable<Customer> Customers()
         {
             return _contextProvider.Context.Customers;
